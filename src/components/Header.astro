@@ -2,15 +2,73 @@
 import Search from './Search.astro';
 ---
 
-<header class="border-b border-gray-200 dark:border-gray-700">
-  <nav class="max-w-6xl mx-auto px-4 py-4 sm:py-6 flex flex-col sm:flex-row justify-between items-center gap-4">
-    <a href="/" class="text-xl font-bold">Melvin Vivas</a>
-    <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full sm:w-auto">
+<header class="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm border-b border-gray-200/50 dark:border-gray-700/50">
+  <nav class="max-w-7xl mx-auto px-8 py-4 flex justify-between items-center">
+    <a href="/" class="text-xl font-bold text-gray-900 dark:text-white">
+      Melvin Vivas
+    </a>
+    
+    <div class="hidden md:flex items-center gap-8">
       <Search />
-      <div class="flex items-center gap-6">
-        <a href="/portfolio" class="hover:text-accent-light dark:hover:text-accent-dark font-medium">Portfolio</a>
-        <a href="/about" class="hover:text-accent-light dark:hover:text-accent-dark">About</a>
+      <div class="flex items-center gap-8">
+        <a href="/portfolio" class="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium transition-colors">
+          Work
+        </a>
+        <a href="/about" class="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium transition-colors">
+          About
+        </a>
+        <a href="/about" class="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium transition-colors">
+          Contact
+        </a>
       </div>
     </div>
+
+    <!-- Mobile menu button -->
+    <button id="mobileMenuBtn" class="md:hidden p-2">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
   </nav>
+
+  <!-- Mobile menu -->
+  <div id="mobileMenu" class="hidden md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+    <div class="px-8 py-4 space-y-4">
+      <Search />
+      <a href="/portfolio" class="block text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium transition-colors">
+        Work
+      </a>
+      <a href="/about" class="block text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium transition-colors">
+        About
+      </a>
+      <a href="/about" class="block text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium transition-colors">
+        Contact
+      </a>
+    </div>
+  </div>
 </header>
+
+<script>
+  function initializeMobileMenu() {
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    mobileMenuBtn?.addEventListener('click', () => {
+      mobileMenu?.classList.toggle('hidden');
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeMobileMenu);
+  } else {
+    initializeMobileMenu();
+  }
+</script>
+</header>
+
+<style>
+  /* Add padding to body to account for fixed header */
+  :global(body) {
+    padding-top: 80px;
+  }
+</style>
