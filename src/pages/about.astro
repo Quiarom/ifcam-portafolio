@@ -1,9 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ContactForm from '../components/ContactForm.astro';
 ---
 
 <Layout title="About Me">
-  <div class="max-w-2xl mx-auto px-4">
+  <div class="max-w-4xl mx-auto px-4">
+    <!-- Hero Section -->
     <div class="text-center mb-12">
       <img
         src="https://avatars.githubusercontent.com/u/890270?v=4"
@@ -17,34 +19,6 @@ import Layout from '../layouts/Layout.astro';
       <p class="text-gray-600 dark:text-gray-400 mt-2">
         Very active on X - let's connect and discuss tech!
       </p>
-      
-      <!-- Links -->
-      <div class="flex flex-col items-center gap-2 mt-4">
-        <a 
-          href="http://aidreamphoto.com" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          class="text-accent-light dark:text-accent-dark hover:underline"
-        >
-          🎨 Check out AI Dream Photo
-        </a>
-        <a 
-          href="https://buymeacoffee.com/donvitocodes" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          class="text-accent-light dark:text-accent-dark hover:underline"
-        >
-          ☕ Support my work
-        </a>
-        <a 
-          href="https://cal.com/donvitocodes" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          class="text-accent-light dark:text-accent-dark hover:underline"
-        >
-          📅 Schedule a consultation
-        </a>
-      </div>
       
       <!-- Social Icons -->
       <div class="flex justify-center gap-6 mt-6">
@@ -84,47 +58,128 @@ import Layout from '../layouts/Layout.astro';
       </div>
     </div>
 
-    <div class="prose dark:prose-invert mx-auto">
-      <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 sm:p-6 mb-8">
-        <h2 class="text-xl sm:text-2xl font-bold mb-4">About Me</h2>
-        <p class="mb-4">
-          Hi! I'm Melvin Vivas (DonvitoCodes), a software engineer and writer focused on leveraging AI for software development
-          and business solutions. I'm passionate about sharing insights and experiences on how AI can transform the way we build
-          software and run businesses.
-        </p>
-        <p class="mb-4">
-          I'm very active on X (@donvito), where I regularly share insights about AI applications in software development
-          and business use cases. Feel free to reach out and connect with me there - I love engaging with fellow developers
-          and tech enthusiasts!
-        </p>
-        <p>
-          When I'm not coding or writing, you can find me exploring new AI technologies,
-          contributing to open-source projects, or helping businesses implement AI solutions.
-        </p>
-      </div>
-
-      <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 sm:p-6">
-        <h2 class="text-xl sm:text-2xl font-bold mb-4">Skills & Expertise</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <h3 class="font-semibold mb-2">Languages</h3>
-            <ul class="list-disc list-inside">
-              <li>JavaScript/TypeScript</li>
-              <li>Python</li>
-              <li>Go</li>
-              <li>Java</li>
-            </ul>
-          </div>
-          <div>
-            <h3 class="font-semibold mb-2">Technologies</h3>
-            <ul class="list-disc list-inside">
-              <li>React/Next.js</li>
-              <li>Node.js</li>
-              <li>AWS</li>
-              <li>AI/ML</li>
-            </ul>
+    <!-- Two Column Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
+      
+      <!-- Left Column - About Info -->
+      <div class="space-y-8">
+        <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 sm:p-8">
+          <h2 class="text-2xl font-bold mb-6 text-gray-900 dark:text-gray-100">About Me</h2>
+          <div class="prose dark:prose-invert">
+            <p class="mb-4">
+              Hi! I'm Melvin Vivas (DonvitoCodes), a software engineer and writer focused on leveraging AI for software development
+              and business solutions. I'm passionate about sharing insights and experiences on how AI can transform the way we build
+              software and run businesses.
+            </p>
+            <p class="mb-4">
+              I'm very active on X (@donvito), where I regularly share insights about AI applications in software development
+              and business use cases. Feel free to reach out and connect with me there - I love engaging with fellow developers
+              and tech enthusiasts!
+            </p>
+            <p>
+              When I'm not coding or writing, you can find me exploring new AI technologies,
+              contributing to open-source projects, or helping businesses implement AI solutions.
+            </p>
           </div>
         </div>
+
+        <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 sm:p-8">
+          <h2 class="text-2xl font-bold mb-6 text-gray-900 dark:text-gray-100">Skills & Expertise</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <h3 class="font-semibold mb-3 text-gray-900 dark:text-gray-100">Languages</h3>
+              <ul class="space-y-2">
+                <li class="flex items-center gap-2">
+                  <span class="w-2 h-2 bg-accent-light dark:bg-accent-dark rounded-full"></span>
+                  JavaScript/TypeScript
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="w-2 h-2 bg-accent-light dark:bg-accent-dark rounded-full"></span>
+                  Python
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="w-2 h-2 bg-accent-light dark:bg-accent-dark rounded-full"></span>
+                  Go
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="w-2 h-2 bg-accent-light dark:bg-accent-dark rounded-full"></span>
+                  Java
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="font-semibold mb-3 text-gray-900 dark:text-gray-100">Technologies</h3>
+              <ul class="space-y-2">
+                <li class="flex items-center gap-2">
+                  <span class="w-2 h-2 bg-accent-light dark:bg-accent-dark rounded-full"></span>
+                  React/Next.js
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="w-2 h-2 bg-accent-light dark:bg-accent-dark rounded-full"></span>
+                  Node.js
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="w-2 h-2 bg-accent-light dark:bg-accent-dark rounded-full"></span>
+                  AWS
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="w-2 h-2 bg-accent-light dark:bg-accent-dark rounded-full"></span>
+                  AI/ML
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 sm:p-8">
+          <h2 class="text-2xl font-bold mb-6 text-gray-900 dark:text-gray-100">Quick Links</h2>
+          <div class="space-y-3">
+            <a 
+              href="http://aidreamphoto.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="flex items-center gap-3 p-3 bg-white dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+            >
+              <span class="text-2xl">🎨</span>
+              <div>
+                <p class="font-medium text-gray-900 dark:text-gray-100">AI Dream Photo</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Check out my AI photo platform</p>
+              </div>
+            </a>
+            
+            <a 
+              href="https://buymeacoffee.com/donvitocodes" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="flex items-center gap-3 p-3 bg-white dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+            >
+              <span class="text-2xl">☕</span>
+              <div>
+                <p class="font-medium text-gray-900 dark:text-gray-100">Support My Work</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Buy me a coffee</p>
+              </div>
+            </a>
+            
+            <a 
+              href="https://cal.com/donvitocodes" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="flex items-center gap-3 p-3 bg-white dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+            >
+              <span class="text-2xl">📅</span>
+              <div>
+                <p class="font-medium text-gray-900 dark:text-gray-100">Schedule a Consultation</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Book a meeting with me</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column - Contact Form -->
+      <div>
+        <ContactForm />
       </div>
     </div>
   </div>
