@@ -11,4 +11,25 @@ const blog = defineCollection({
   })
 });
 
-export const collections = { blog };
+const portfolio = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    publishDate: z.date(),
+    description: z.string(),
+    author: z.string(),
+    image: z.object({
+      src: z.string(),
+      alt: z.string()
+    }).optional(),
+    client: z.string(),
+    country: z.string(),
+    industry: z.string(),
+    services: z.array(z.string()) // This will work like tags for filtering
+  })
+});
+
+export const collections = { 
+  blog,
+  portfolio 
+};
