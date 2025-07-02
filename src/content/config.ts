@@ -25,7 +25,7 @@ const portfolio = defineCollection({
     client: z.string(),
     country: z.string(),
     industry: z.string(),
-    services: z.array(z.string()) // This will work like tags for filtering
+    services: z.array(z.string()) // Funciona como tags para filtrar
   })
 });
 

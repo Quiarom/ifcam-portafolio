@@ -1,0 +1,258 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const portfolioPosts = await getCollection('portfolio');
+const sortedPosts = portfolioPosts.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
+
+// Get unique services (like tags)
+const allServices = [...new Set(portfolioPosts.flatMap(post => post.data.services))].sort();
+const allIndustries = [...new Set(portfolioPosts.map(post => post.data.industry))].sort();
+---
+
+<Layout title="Portfolio - Melvin Vivas">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="text-center mb-12">
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">Portfolio</h1>
+      <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+        Explore my latest projects showcasing AI-powered solutions, full-stack development, and innovative web applications.
+      </p>
+    </div>
+    
+    <!-- Filters -->
+    <div class="mb-8 space-y-4">
+      <!-- Services Filter -->
+      <div class="overflow-x-auto -mx-4 px-4 pb-3">
+        <h2 class="text-lg font-semibold mb-2">Filter by Service:</h2>
+        <div class="flex flex-nowrap sm:flex-wrap gap-2 min-w-max sm:min-w-0" id="serviceFilters">
+          <button
+            class="service-filter active shrink-0 px-3 py-1.5 text-sm font-medium rounded-full bg-accent-light/10 dark:bg-accent-dark/10 text-accent-light dark:text-accent-dark hover:bg-accent-light/20 dark:hover:bg-accent-dark/20 transition-colors cursor-pointer"
+            data-service="all"
+          >
+            All Services
+          </button>
+          {allServices.map((service) => (
+            <button
+              class="service-filter shrink-0 px-3 py-1.5 text-sm font-medium rounded-full bg-accent-light/10 dark:bg-accent-dark/10 text-accent-light dark:text-accent-dark hover:bg-accent-light/20 dark:hover:bg-accent-dark/20 transition-colors cursor-pointer"
+              data-service={service}
+            >
+              {service}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <!-- Industry Filter -->
+      <div class="overflow-x-auto -mx-4 px-4 pb-3">
+        <h2 class="text-lg font-semibold mb-2">Filter by Industry:</h2>
+        <div class="flex flex-nowrap sm:flex-wrap gap-2 min-w-max sm:min-w-0" id="industryFilters">
+          <button
+            class="industry-filter active shrink-0 px-3 py-1.5 text-sm font-medium rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors cursor-pointer"
+            data-industry="all"
+          >
+            All Industries
+          </button>
+          {allIndustries.map((industry) => (
+            <button
+              class="industry-filter shrink-0 px-3 py-1.5 text-sm font-medium rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors cursor-pointer"
+              data-industry={industry}
+            >
+              {industry}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Portfolio Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="portfolioContainer">
+      {
+        sortedPosts.map((post) => (
+          <article 
+            class="portfolio-item bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow" 
+            data-services={JSON.stringify(post.data.services)}
+            data-industry={post.data.industry}
+          >
+            <a href={`/portfolio/${post.slug}`} class="block">
+              {post.data.image && (
+                <img
+                  src={post.data.image.src}
+                  alt={post.data.image.alt}
+                  class="w-full h-48 object-cover"
+                />
+              )}
+              <div class="p-6">
+                <div class="flex items-center gap-2 mb-3">
+                  <span class="px-2 py-1 text-xs font-medium rounded-full bg-accent-light/10 dark:bg-accent-dark/10 text-accent-light dark:text-accent-dark">
+                    {post.data.industry}
+                  </span>
+                  <span class="text-xs text-gray-500 dark:text-gray-400">{post.data.country}</span>
+                </div>
+                
+                <h3 class="text-xl font-bold mb-2 hover:text-accent-light dark:hover:text-accent-dark transition-colors">
+                  {post.data.title}
+                </h3>
+                
+                <p class="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
+                  {post.data.description}
+                </p>
+                
+                <div class="flex flex-wrap gap-1 mb-4">
+                  {post.data.services.slice(0, 3).map((service) => (
+                    <span class="px-2 py-1 text-xs rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">
+                      {service}
+                    </span>
+                  ))}
+                  {post.data.services.length > 3 && (
+                    <span class="px-2 py-1 text-xs rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">
+                      +{post.data.services.length - 3} more
+                    </span>
+                  )}
+                </div>
+                
+                <div class="flex items-center justify-between">
+                  <span class="text-sm text-gray-500 dark:text-gray-400">
+                    {post.data.publishDate.toLocaleDateString('en-US', { 
+                      year: 'numeric',
+                      month: 'short'
+                    })}
+                  </span>
+                  <span class="text-accent-light dark:text-accent-dark font-medium">
+                    View Project →
+                  </span>
+                </div>
+              </div>
+            </a>
+          </article>
+        ))
+      }
+    </div>
+
+    <!-- Blog Section -->
+    <div class="mt-16 pt-12 border-t border-gray-200 dark:border-gray-700">
+      <div class="text-center mb-8">
+        <h2 class="text-2xl sm:text-3xl font-bold mb-4">Latest Blog Posts</h2>
+        <p class="text-gray-600 dark:text-gray-400">
+          Insights and tutorials on AI, web development, and technology trends.
+        </p>
+      </div>
+      <div class="text-center">
+        <a
+          href="/blog"
+          class="inline-flex items-center px-6 py-3 bg-accent-light dark:bg-accent-dark text-white rounded-lg hover:bg-accent-light/90 dark:hover:bg-accent-dark/90 transition-colors"
+        >
+          Explore Blog Posts
+          <span class="ml-2">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .overflow-x-auto::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .overflow-x-auto {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>
+
+<script>
+  let touchStartX = 0;
+  let touchStartY = 0;
+  const touchThreshold = 10;
+
+  function initializeFilters() {
+    const serviceFilters = document.querySelectorAll('.service-filter');
+    const industryFilters = document.querySelectorAll('.industry-filter');
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+    let activeService = 'all';
+    let activeIndustry = 'all';
+
+    function filterPortfolio() {
+      portfolioItems.forEach(item => {
+        const itemServices = JSON.parse(item.getAttribute('data-services') || '[]');
+        const itemIndustry = item.getAttribute('data-industry');
+        
+        const serviceMatch = activeService === 'all' || itemServices.includes(activeService);
+        const industryMatch = activeIndustry === 'all' || itemIndustry === activeIndustry;
+        
+        if (serviceMatch && industryMatch) {
+          item.style.display = '';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+
+    function updateServiceFilter(selectedService) {
+      activeService = selectedService;
+      
+      serviceFilters.forEach(filter => {
+        if (filter.getAttribute('data-service') === selectedService) {
+          filter.classList.add('active', 'bg-accent-light', 'dark:bg-accent-dark', 'text-white');
+          filter.classList.remove('bg-accent-light/10', 'dark:bg-accent-dark/10', 'text-accent-light', 'dark:text-accent-dark');
+        } else {
+          filter.classList.remove('active', 'bg-accent-light', 'dark:bg-accent-dark', 'text-white');
+          filter.classList.add('bg-accent-light/10', 'dark:bg-accent-dark/10', 'text-accent-light', 'dark:text-accent-dark');
+        }
+      });
+      
+      filterPortfolio();
+    }
+
+    function updateIndustryFilter(selectedIndustry) {
+      activeIndustry = selectedIndustry;
+      
+      industryFilters.forEach(filter => {
+        if (filter.getAttribute('data-industry') === selectedIndustry) {
+          filter.classList.add('active', 'bg-gray-700', 'dark:bg-gray-600', 'text-white');
+          filter.classList.remove('bg-gray-100', 'dark:bg-gray-800', 'text-gray-700', 'dark:text-gray-300');
+        } else {
+          filter.classList.remove('active', 'bg-gray-700', 'dark:bg-gray-600', 'text-white');
+          filter.classList.add('bg-gray-100', 'dark:bg-gray-800', 'text-gray-700', 'dark:text-gray-300');
+        }
+      });
+      
+      filterPortfolio();
+    }
+
+    // Service filter events
+    serviceFilters.forEach(filter => {
+      filter.addEventListener('click', (e) => {
+        e.preventDefault();
+        const service = filter.getAttribute('data-service');
+        updateServiceFilter(service);
+      });
+    });
+
+    // Industry filter events
+    industryFilters.forEach(filter => {
+      filter.addEventListener('click', (e) => {
+        e.preventDefault();
+        const industry = filter.getAttribute('data-industry');
+        updateIndustryFilter(industry);
+      });
+    });
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeFilters);
+  } else {
+    initializeFilters();
+  }
+</script>
