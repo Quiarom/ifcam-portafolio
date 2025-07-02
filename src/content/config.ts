@@ -1,16 +1,5 @@
 import { defineCollection, z } from 'astro:content';
 
-const blog = defineCollection({
-  type: 'content',
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    pubDate: z.date(),
-    image: z.string(),
-    tags: z.array(z.string())
-  })
-});
-
 const portfolio = defineCollection({
   type: 'content',
   schema: z.object({
@@ -25,11 +14,10 @@ const portfolio = defineCollection({
     client: z.string(),
     country: z.string(),
     industry: z.string(),
-    services: z.array(z.string()) // Funciona como tags para filtrar
+    services: z.array(z.string())
   })
 });
 
 export const collections = { 
-  blog,
   portfolio 
 };

@@ -5,7 +5,7 @@
   <input
     type="text"
     id="search"
-    placeholder="Search projects & posts..."
+    placeholder="Search projects..."
     class="w-full px-4 py-2 rounded-full bg-gray-100 dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-accent-light dark:focus:ring-accent-dark"
   />
   <div
@@ -42,16 +42,12 @@
       .map(
         ({ item }) => `
           <a
-            href="/${item.type}/${item.slug}"
+            href="/portfolio/${item.slug}"
             class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
           >
             <div class="flex items-center gap-2">
-              <span class="px-2 py-1 text-xs rounded-full ${
-                item.type === 'portfolio' 
-                  ? 'bg-accent-light/10 text-accent-light dark:bg-accent-dark/10 dark:text-accent-dark' 
-                  : 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300'
-              }">
-                ${item.type}
+              <span class="px-2 py-1 text-xs rounded-full bg-accent-light/10 text-accent-light dark:bg-accent-dark/10 dark:text-accent-dark">
+                portfolio
               </span>
               <span class="font-medium">${item.title}</span>
             </div>
