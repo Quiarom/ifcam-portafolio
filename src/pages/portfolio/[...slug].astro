@@ -1,0 +1,19 @@
+---
+import { getCollection } from 'astro:content';
+import PortfolioPost from '../../layouts/PortfolioPost.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('portfolio');
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+---
+
+<PortfolioPost post={post}>
+  <Content />
+</PortfolioPost>

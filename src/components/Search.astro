@@ -1,0 +1,66 @@
+---
+---
+
+<div class="relative w-full sm:w-64">
+  <input
+    type="text"
+    id="search"
+    placeholder="Search projects..."
+    class="w-full px-4 py-2 rounded-full bg-gray-100 dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-accent-light dark:focus:ring-accent-dark"
+  />
+  <div
+    id="searchResults"
+    class="absolute left-0 right-0 mt-2 bg-white dark:bg-gray-800 rounded-lg shadow-lg hidden z-50"
+  >
+  </div>
+</div>
+
+<script>
+  import Fuse from 'fuse.js';
+
+  const searchData = await fetch('/search.json').then(res => res.json());
+  const fuse = new Fuse(searchData, {
+    keys: ['title', 'description'],
+    threshold: 0.3,
+  });
+
+  const input = document.getElementById('search');
+  const resultsContainer = document.getElementById('searchResults');
+
+  input?.addEventListener('input', (e) => {
+    const target = e.target as HTMLInputElement;
+    const results = fuse.search(target.value);
+    
+    if (target.value.length === 0) {
+      resultsContainer?.classList.add('hidden');
+      return;
+    }
+
+    resultsContainer?.classList.remove('hidden');
+    resultsContainer!.innerHTML = results
+      .slice(0, 5)
+      .map(
+        ({ item }) => `
+          <a
+            href="/portfolio/${item.slug}"
+            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
+          >
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-1 text-xs rounded-full bg-accent-light/10 text-accent-light dark:bg-accent-dark/10 dark:text-accent-dark">
+                portfolio
+              </span>
+              <span class="font-medium">${item.title}</span>
+            </div>
+          </a>
+        `
+      )
+      .join('');
+  });
+
+  // Hide results when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!input?.contains(e.target as Node)) {
+      resultsContainer?.classList.add('hidden');
+    }
+  });
+</script>
