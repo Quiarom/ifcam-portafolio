@@ -7,6 +7,7 @@ interface Props {
   showProfile?: boolean;
   showCTA?: boolean;
   ctaHref?: string;
+  ctaText?: string;
 }
 
 const { 
@@ -36,17 +37,19 @@ const {
     {showProfile && (
       <div class="hero-profile">
         <img
-          src="https://avatars.githubusercontent.com/u/890270?v=4"
+          src="avatar.jpg"
           alt="Melvin Vivas"
           class="hero-profile-image"
         />
         <div class="hero-profile-info">
-          <h3>Melvin Vivas</h3>
+          <h3>Isaac Fernández</h3>
           <div class="hero-profile-social">
             <a href="https://github.com/donvito" aria-label="GitHub">
-              <svg fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+  <path d="M11.25 2.625H6.75C4.47183 2.625 2.625 4.47183 2.625 6.75V11.25C2.625 13.5282 4.47183 15.375 6.75 15.375H11.25C13.5282 15.375 15.375 13.5282 15.375 11.25V6.75C15.375 4.47183 13.5282 2.625 11.25 2.625Z" stroke="#FBFBFB" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M9.00003 11.7044C10.4937 11.7044 11.7045 10.4936 11.7045 8.99991C11.7045 7.50626 10.4937 6.29541 9.00003 6.29541C7.50638 6.29541 6.29553 7.50626 6.29553 8.99991C6.29553 10.4936 7.50638 11.7044 9.00003 11.7044Z" stroke="#FBFBFB" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M12.6705 6.10213C13.0971 6.10213 13.443 5.75627 13.443 5.32963C13.443 4.90299 13.0971 4.55713 12.6705 4.55713C12.2439 4.55713 11.898 4.90299 11.898 5.32963C11.898 5.75627 12.2439 6.10213 12.6705 6.10213Z" fill="#FBFBFB"/>
+</svg>
             </a>
             <a href="https://x.com/donvito" aria-label="Twitter">
               <svg fill="currentColor" viewBox="0 0 24 24">
@@ -132,12 +135,13 @@ const {
       const gap = 32;
       const itemWidth = logoWidth + gap;
       const animationSpeed = 0.8; // Smooth speed
-      
+
       // State
       let translateX = 0;
-      const totalSetWidth = logos.length * itemWidth;
       let animationId;
       let isAnimating = false;
+      let clonedSets = 0;
+      let scrollWidth = 0;
 
       // Create logo elements
       function createLogoElement(text) {
@@ -172,44 +176,37 @@ const {
       // Calculate how many sets we need based on viewport
       function calculateRequiredSets() {
         const viewportWidth = carousel.parentElement.offsetWidth;
-        const setsNeeded = Math.ceil(viewportWidth / totalSetWidth) + 2; // +2 for buffer
+        const setsNeeded = Math.ceil(viewportWidth / (logos.length * itemWidth)) + 2; // +2 for buffer
         return Math.max(3, setsNeeded); // Minimum 3 sets
       }
 
       // Populate carousel with cloned sets for infinite scroll
       function populateCarousel() {
         carousel.innerHTML = '';
-        const requiredSets = calculateRequiredSets();
-        
-        // Create multiple identical sets for seamless infinite scroll
-        for (let set = 0; set < requiredSets; set++) {
+        clonedSets = calculateRequiredSets();
+        for (let set = 0; set < clonedSets; set++) {
           logos.forEach(logo => {
             carousel.appendChild(createLogoElement(logo));
           });
         }
-        
         // Set initial carousel styles
         carousel.style.display = 'flex';
         carousel.style.alignItems = 'center';
         carousel.style.willChange = 'transform';
         carousel.style.transform = 'translateX(0px)';
+        // Calculate total scrollable width
+        scrollWidth = clonedSets * logos.length * itemWidth;
       }
 
       // Animate carousel
       function animateCarousel() {
         if (!isAnimating) return;
-        
-        // Move from left to right
         translateX -= animationSpeed;
-        
-        // Reset position when one complete set has passed
-        if (Math.abs(translateX) >= totalSetWidth) {
+        // Reset position only after full scrollWidth has passed
+        if (Math.abs(translateX) >= scrollWidth / 2) {
           translateX = 0;
         }
-        
-        // Apply smooth transform
         carousel.style.transform = `translateX(${translateX}px)`;
-        
         animationId = requestAnimationFrame(animateCarousel);
       }
 
@@ -234,7 +231,6 @@ const {
       function handleResize() {
         const currentSets = carousel.children.length / logos.length;
         const requiredSets = calculateRequiredSets();
-        
         if (requiredSets !== currentSets) {
           const wasAnimating = isAnimating;
           stopAnimation();
@@ -242,6 +238,9 @@ const {
           if (wasAnimating) {
             startAnimation();
           }
+        } else {
+          // recalculate scrollWidth in case of minor resize
+          scrollWidth = clonedSets * logos.length * itemWidth;
         }
       }
       

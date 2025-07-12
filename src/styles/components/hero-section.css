@@ -1,7 +1,7 @@
 /* Hero Section Component Styles */
 .hero-section {
   position: relative;
-  min-height: 100vh;
+  min-height: 80vh;
   overflow: hidden;
 }
 
@@ -31,6 +31,7 @@
   flex-direction: column;
   justify-content: space-between;
   margin: 39px 68px 60px 68px;
+  gap: 10px;
 }
 
 /* Profile section */
@@ -42,10 +43,9 @@
 }
 
 .hero-profile-image {
-  width: 3rem;
-  height: 3rem;
+  width: 4rem;
+  height: 4rem;
   border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
 .hero-profile-info h3 {
@@ -53,6 +53,7 @@
   font-size: 0.875rem;
   font-weight: 500;
   margin: 0;
+  line-height: 22px;
 }
 
 .hero-profile-social {
@@ -71,8 +72,8 @@
 }
 
 .hero-profile-social svg {
-  width: 1rem;
-  height: 1rem;
+  width: 1.15rem;
+  height: 1.15rem;
 }
 
 /* Main content */
@@ -98,6 +99,7 @@
   letter-spacing: -1.38px;
   max-width: 751px;
   margin-bottom: var(--spacing-xl);
+  margin-top: var(--spacing-xl);
 }
 
 /* Responsive adjustments for hero title */

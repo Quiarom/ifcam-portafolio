@@ -19,7 +19,7 @@ const sortedPortfolio = portfolioPosts.sort((a, b) => b.data.publishDate.valueOf
   />
 
   <!-- Projects Section -->
-  <section class="py-20 bg-gray-50 dark:bg-gray-900">
+  <section class="py-20 dark:bg-gray-900">
     <div class="max-w-7xl mx-auto px-8">
       <!-- Section Header -->
       <div class="mb-12">
@@ -189,13 +189,13 @@ const sortedPortfolio = portfolioPosts.sort((a, b) => b.data.publishDate.valueOf
         // Filter projects based on category
         projectItems.forEach(item => {
           if (category === 'all') {
-            item.style.display = 'block';
+            (item as HTMLElement).style.display = 'block';
           } else {
             const itemCategories = JSON.parse(item.getAttribute('data-categories') || '[]');
             if (itemCategories.includes(category)) {
-              item.style.display = 'block';
+              (item as HTMLElement).style.display = 'block';
             } else {
-              item.style.display = 'none';
+              (item as HTMLElement).style.display = 'none';
             }
           }
         });
@@ -226,3 +226,4 @@ const sortedPortfolio = portfolioPosts.sort((a, b) => b.data.publishDate.valueOf
 
   // Re-initialize after view transitions
   document.addEventListener('astro:after-swap', initializeAll);
+</script>
