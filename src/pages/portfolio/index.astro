@@ -1,0 +1,412 @@
+---
+import '../../styles/pages/portfolio.css';
+import Layout from '../../layouts/Layout.astro';
+import HeroSection from '../../components/HeroSection.astro';
+import { getCollection } from 'astro:content';
+
+const portfolioPosts = await getCollection('portfolio');
+const sortedPosts = portfolioPosts.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
+
+// Get unique categories
+const allCategories = [...new Set(portfolioPosts.flatMap(post => post.data.categories || []))].sort();
+
+// Function to calculate reading time
+function calculateReadingTime(content: string): number {
+  const wordsPerMinute = 200;
+  const words = content.split(/\s+/).length;
+  return Math.ceil(words / wordsPerMinute);
+}
+---
+
+<Layout title="Portfolio - Melvin Vivas">
+  <!-- Hero Section -->
+  <HeroSection 
+    title="Portfolio"
+    subtitle="Explore my latest projects showcasing AI-powered solutions, full-stack development, and innovative web applications."
+    showProfile={false}
+    showCTA={false}
+  />
+
+  <div class="portfolio-container">
+    <!-- Category Filters -->
+    <div class="filters-container">
+      <div class="filters-wrapper" id="categoryFilters">
+        <button
+          class="filter-btn active"
+          data-category="all"
+        >
+          All
+        </button>
+        {allCategories.map((category) => (
+          <button
+            class="filter-btn"
+            data-category={category}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <!-- Portfolio Grid -->
+    <div class="portfolio-grid" id="portfolioContainer">
+      {
+        sortedPosts.map((post) => {
+          const readingTime = calculateReadingTime(post.body || '');
+          return (
+            <article 
+              class="portfolio-item" 
+              data-categories={JSON.stringify(post.data.categories || [])}
+            >
+              <a href={`/portfolio/${post.slug}`} class="portfolio-link">
+                {/* Featured Image */}
+                {post.data.image && (
+                  <div class="portfolio-image">
+                    <img
+                      src={post.data.image.src}
+                      alt={post.data.image.alt}
+                      class="image"
+                      loading="lazy"
+                    />
+                  </div>
+                )}
+                
+                {/* Content */}
+                <div class="portfolio-content">
+                  <h2 class="portfolio-item-title">
+                    {post.data.title}
+                  </h2>
+                  
+                  {/* Metadata */}
+                  <div class="portfolio-metadata">
+                    <time class="metadata-item">
+                      {post.data.publishDate.toLocaleDateString('en-US', { 
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric'
+                      })}
+                    </time>
+                    <span class="metadata-separator">•</span>
+                    <span class="metadata-item">{readingTime} min read</span>
+                    <span class="metadata-separator">•</span>
+                    <span class="metadata-category">{post.data.industry}</span>
+                  </div>
+                  
+                  {/* Description */}
+                  <p class="portfolio-description">
+                    {post.data.description}
+                  </p>
+                </div>
+              </a>
+            </article>
+          );
+        })
+      }
+    </div>
+
+  </div>
+</Layout>
+
+<style>
+  .portfolio-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 6rem;
+  }
+
+  @media (min-width: 1024px) {
+    .portfolio-container {
+      padding: 2rem 2rem 6rem;
+    }
+  }
+
+  /* Filters */
+  .filters-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    margin-bottom: 3rem;
+  }
+
+  .filters-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filters-wrapper {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    min-width: max-content;
+    padding: 0 1rem;
+  }
+
+  @media (max-width: 767px) {
+    .filters-wrapper {
+      justify-content: flex-start;
+    }
+  }
+
+  .filter-btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 9999px;
+    border: 1px solid #d1d5db;
+    background-color: transparent;
+    color: #374151;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .filter-btn:hover {
+    background-color: #f3f4f6;
+    border-color: #9ca3af;
+  }
+
+  .filter-btn.active {
+    background-color: #111827;
+    color: white;
+    border-color: #111827;
+  }
+
+  .filter-btn.active:hover {
+    background-color: #1f2937;
+  }
+
+  /* Portfolio Grid */
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    margin-bottom: 4rem;
+  }
+
+  @media (min-width: 1024px) {
+    .portfolio-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+  }
+  .portfolio-image {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 0.75rem;
+    margin-bottom: 1.5rem;
+    background-color: #f3f4f6;
+  }
+
+  .image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .portfolio-item:hover .image {
+    transform: scale(1.05);
+  }
+
+  .portfolio-content {
+    padding: 0 0.25rem;
+  }
+
+  .portfolio-item-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+    transition: color 0.2s ease;
+  }
+
+  @media (min-width: 1024px) {
+    .portfolio-item-title {
+      font-size: 1.5rem;
+    }
+  }
+
+  .portfolio-item:hover .portfolio-item-title {
+    color: #2563eb;
+  }
+
+  .portfolio-metadata {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .metadata-item {
+    font-size: 0.875rem;
+    color: #6b7280;
+  }
+
+  .metadata-separator {
+    font-size: 0.875rem;
+    color: #d1d5db;
+  }
+
+  .portfolio-description {
+    font-size: 1rem;
+    color: #4b5563;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Dark mode support */
+  @media (prefers-color-scheme: dark) {
+    .portfolio-item-title {
+      color: #f9fafb;
+    }
+
+    .blog-subtitle {
+      color: #9ca3af;
+    }
+
+    .portfolio-description {
+      color: #d1d5db;
+    }
+
+    .filter-btn {
+      color: #f9fafb;
+      border-color: #4b5563;
+    }
+
+    .filter-btn:hover {
+      background-color: #374151;
+      border-color: #6b7280;
+    }
+
+    .filter-btn.active {
+      background-color: #f9fafb;
+      color: #111827;
+      border-color: #f9fafb;
+    }
+
+    .filter-btn.active:hover {
+      background-color: #e5e7eb;
+    }
+
+    .blog-title {
+      color: #f9fafb;
+    }
+
+    .blog-section {
+      border-color: #374151;
+    }
+
+    .portfolio-image {
+      background-color: #374151;
+    }
+  }
+
+  /* Dark mode class-based */
+  :global(.dark) .portfolio-item-title {
+    color: #f9fafb;
+  }
+
+  :global(.dark) .blog-subtitle {
+    color: #9ca3af;
+  }
+
+  :global(.dark) .portfolio-description {
+    color: #d1d5db;
+  }
+
+  :global(.dark) .filter-btn {
+    color: #f9fafb;
+    border-color: #4b5563;
+  }
+
+  :global(.dark) .filter-btn:hover {
+    background-color: #374151;
+    border-color: #6b7280;
+  }
+
+  :global(.dark) .filter-btn.active {
+    background-color: #f9fafb;
+    color: #111827;
+    border-color: #f9fafb;
+  }
+
+  :global(.dark) .filter-btn.active:hover {
+    background-color: #e5e7eb;
+  }
+
+  :global(.dark) .blog-title {
+    color: #f9fafb;
+  }
+
+  :global(.dark) .blog-section {
+    border-color: #374151;
+  }
+
+  :global(.dark) .portfolio-image {
+    background-color: #374151;
+  }
+
+  :global(.dark) .portfolio-item:hover .portfolio-item-title {
+    color: #60a5fa;
+  }
+
+  :global(.dark) .metadata-category {
+    color: #60a5fa;
+  }
+</style>
+
+<script>
+  function initializeFilters() {
+    const categoryFilters = document.querySelectorAll('.filter-btn');
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+    let activeCategory = 'all';
+
+    function filterPortfolio() {
+      portfolioItems.forEach(item => {
+        const itemCategories = JSON.parse(item.getAttribute('data-categories') || '[]');
+        
+        const categoryMatch = activeCategory === 'all' || itemCategories.includes(activeCategory);
+        
+        if (categoryMatch) {
+          item.style.display = '';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+
+    function updateCategoryFilter(selectedCategory) {
+      activeCategory = selectedCategory;
+      
+      categoryFilters.forEach(filter => {
+        if (filter.getAttribute('data-category') === selectedCategory) {
+          filter.classList.add('active');
+        } else {
+          filter.classList.remove('active');
+        }
+      });
+      
+      filterPortfolio();
+    }
+
+    // Category filter events
+    categoryFilters.forEach(filter => {
+      filter.addEventListener('click', (e) => {
+        e.preventDefault();
+        const category = filter.getAttribute('data-category');
+        updateCategoryFilter(category);
+      });
+    });
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeFilters);
+  } else {
+    initializeFilters();
+  }
+</script>

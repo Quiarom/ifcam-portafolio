@@ -1,0 +1,173 @@
+---
+import '../styles/pages/article.css';
+import Layout from './Layout.astro';
+import type { CollectionEntry } from 'astro:content';
+
+type Props = {
+  post: CollectionEntry<'portfolio'>;
+};
+
+const { post } = Astro.props;
+const { title, description, publishDate, image, client, country, industry, services, author } = post.data;
+
+// Calculate reading time
+function calculateReadingTime(content: string): number {
+  const wordsPerMinute = 200;
+  const words = content.split(/\s+/).length;
+  return Math.ceil(words / wordsPerMinute);
+}
+
+const readingTime = calculateReadingTime(post.body || '');
+---
+
+<Layout title={title} description={description}>
+  <div class="portfolio-post-container">
+    
+    <!-- Article Header -->
+    <header class="portfolio-post-header">
+      <div class="breadcrumb">
+        <a href="/portfolio" class="breadcrumb-link">Portfolio</a>
+        <span class="breadcrumb-separator">/</span>
+        <span class="breadcrumb-current">{title}</span>
+      </div>
+      
+      <h1 class="portfolio-post-title">{title}</h1>
+      <p class="portfolio-post-description">{description}</p>
+      
+      <div class="portfolio-post-meta">
+        <time class="meta-date">
+          {publishDate.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })}
+        </time>
+        <span class="meta-separator">•</span>
+        <span class="meta-reading">{readingTime} min read</span>
+        <span class="meta-separator">•</span>
+        <span class="meta-author">By {author}</span>
+      </div>
+    </header>
+
+    <!-- Featured Image -->
+    {image && (
+      <div class="portfolio-post-featured-image">
+        <img
+          src={image.src}
+          alt={image.alt}
+          class="featured-image"
+        />
+      </div>
+    )}
+
+    <!-- Two Column Layout -->
+    <div class="portfolio-post-body">
+      
+      <!-- Left Sidebar - Credits/Metadata (Sticky) -->
+      <aside class="portfolio-post-credits">
+        <div class="credits-grid">
+          <!-- When -->
+          <div class="credit-item">
+            <h3 class="credit-label">When</h3>
+            <p class="credit-value">{publishDate.getFullYear()}</p>
+          </div>
+
+          <!-- For -->
+          <div class="credit-item">
+            <h3 class="credit-label">For</h3>
+            <p class="credit-value">{client}</p>
+          </div>
+
+          <!-- Sector -->
+          <div class="credit-item">
+            <h3 class="credit-label">Sector</h3>
+            <p class="credit-value">{industry}</p>
+          </div>
+
+          <!-- Discipline -->
+          <div class="credit-item">
+            <h3 class="credit-label">Discipline</h3>
+            <div class="credit-services">
+              {services.map((service) => (
+                <span class="service-item">{service}</span>
+              ))}
+            </div>
+          </div>
+
+          <!-- Location -->
+          <div class="credit-item">
+            <h3 class="credit-label">Location</h3>
+            <p class="credit-value">{country}</p>
+          </div>
+
+          <!-- Categories -->
+          <div class="credit-item">
+            <h3 class="credit-label">Categories</h3>
+            <div class="credit-categories">
+              {post.data.categories?.map((category) => (
+                <span class="category-item">{category}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Right Content - Article Content -->
+      <main class="portfolio-post-content">
+        <slot />
+      </main>
+    </div>
+
+    <!-- Article Footer -->
+    <footer class="portfolio-post-footer">
+      <div class="footer-divider"></div>
+      <div class="footer-content">
+        <div class="author-info">
+          <img
+            src="https://avatars.githubusercontent.com/u/890270?v=4"
+            alt={author}
+            class="author-avatar"
+          />
+          <div class="author-details">
+            <h3 class="author-name">{author}</h3>
+            <p class="author-bio">Full-Stack Developer & AI Enthusiast</p>
+          </div>
+        </div>
+        
+        <div class="article-actions">
+          <a href="/portfolio" class="action-link">
+            ← Back to Portfolio
+          </a>
+          <a href="/about" class="action-link">
+            Get in Touch →
+          </a>
+        </div>
+      </div>
+
+      <!-- Share Section -->
+      <div class="share-section">
+        <h3 class="share-title">Share This Project</h3>
+        <div class="share-buttons">
+          <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(Astro.url.href)}`} 
+             target="_blank" 
+             rel="noopener noreferrer"
+             class="share-button twitter">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+            Share on Twitter
+          </a>
+          <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(Astro.url.href)}`}
+             target="_blank"
+             rel="noopener noreferrer" 
+             class="share-button linkedin">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+            Share on LinkedIn
+          </a>
+        </div>
+      </div>
+    </footer>
+  </div>
+</Layout>

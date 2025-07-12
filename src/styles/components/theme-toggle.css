@@ -1,0 +1,49 @@
+/* Theme Toggle Component Styles */
+.theme-toggle {
+  position: fixed;
+  bottom: var(--spacing-md);
+  right: var(--spacing-md);
+  padding: var(--spacing-sm);
+  background-color: #e5e7eb;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+  z-index: 50;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+}
+
+.theme-toggle:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+}
+
+.theme-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  transition: opacity var(--transition-fast);
+}
+
+.theme-icon.sun {
+  display: none;
+}
+
+.theme-icon.moon {
+  display: block;
+}
+
+/* Dark mode */
+:global(.dark) .theme-toggle {
+  background-color: var(--color-surface);
+}
+
+:global(.dark) .theme-icon.sun {
+  display: block;
+}
+
+:global(.dark) .theme-icon.moon {
+  display: none;
+}

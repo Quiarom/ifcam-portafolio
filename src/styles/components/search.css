@@ -1,0 +1,104 @@
+/* Search Component Styles */
+.search-container {
+  position: relative;
+  width: 100%;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.5rem var(--spacing-md);
+  border-radius: 9999px;
+  background-color: #f3f4f6;
+  border: 1px solid transparent;
+  font-size: 0.875rem;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.search-input:focus {
+  outline: none;
+  background-color: white;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.search-results {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-top: 0.5rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  z-index: 50;
+  overflow: hidden;
+}
+
+.search-results.hidden {
+  display: none;
+}
+
+.search-result-item {
+  display: block;
+  padding: var(--spacing-md);
+  text-decoration: none;
+  color: inherit;
+  transition: background-color var(--transition-fast);
+}
+
+.search-result-item:hover {
+  background-color: #f3f4f6;
+}
+
+.search-result-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.search-result-badge {
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+  border-radius: 9999px;
+  background-color: rgba(37, 99, 235, 0.1);
+  color: var(--color-accent);
+}
+
+.search-result-title {
+  font-weight: 500;
+  color: var(--color-primary);
+}
+
+/* Responsive design */
+@media (min-width: 640px) {
+  .search-container {
+    width: 16rem;
+  }
+}
+
+/* Dark mode */
+:global(.dark) .search-input {
+  background-color: var(--color-surface);
+  color: var(--color-primary);
+}
+
+:global(.dark) .search-input:focus {
+  background-color: var(--color-surface);
+  border-color: var(--color-accent);
+}
+
+:global(.dark) .search-results {
+  background-color: var(--color-surface);
+}
+
+:global(.dark) .search-result-item:hover {
+  background-color: #374151;
+}
+
+:global(.dark) .search-result-badge {
+  background-color: rgba(96, 165, 250, 0.1);
+  color: var(--color-accent);
+}
+
+:global(.dark) .search-result-title {
+  color: var(--color-primary);
+}

@@ -1,0 +1,67 @@
+---
+import '../styles/components/search.css';
+---
+
+<div class="search-container">
+  <input
+    type="text"
+    id="search"
+    placeholder="Search projects..."
+    class="search-input"
+  />
+  <div
+    id="searchResults"
+    class="search-results hidden"
+  >
+  </div>
+</div>
+
+<script>
+  import Fuse from 'fuse.js';
+
+  const searchData = await fetch('/search.json').then(res => res.json());
+  const fuse = new Fuse(searchData, {
+    keys: ['title', 'description'],
+    threshold: 0.3,
+  });
+
+  const input = document.getElementById('search');
+  const resultsContainer = document.getElementById('searchResults');
+
+  input?.addEventListener('input', (e) => {
+    const target = e.target as HTMLInputElement;
+    const results = fuse.search(target.value);
+    
+    if (target.value.length === 0) {
+      resultsContainer?.classList.add('hidden');
+      return;
+    }
+
+    resultsContainer?.classList.remove('hidden');
+    resultsContainer!.innerHTML = results
+      .slice(0, 5)
+      .map(
+        ({ item }) => `
+          <a
+            href="/portfolio/${item.slug}"
+            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
+          >
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-1 text-xs rounded-full bg-accent-light/10 text-accent-light dark:bg-accent-dark/10 dark:text-accent-dark">
+                portfolio
+              </span>
+              <span class="font-medium">${item.title}</span>
+            </div>
+          </a>
+        `
+      )
+      .join('');
+  });
+
+  // Hide results when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!input?.contains(e.target as Node)) {
+      resultsContainer?.classList.add('hidden');
+    }
+  });
+</script>
