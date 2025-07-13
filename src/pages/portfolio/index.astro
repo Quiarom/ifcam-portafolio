@@ -1,11 +1,11 @@
 ---
-import '../../styles/pages/portfolio.css';
 import Layout from '../../layouts/Layout.astro';
 import HeroSection from '../../components/HeroSection.astro';
 import { getCollection } from 'astro:content';
 
 const portfolioPosts = await getCollection('portfolio');
 const sortedPosts = portfolioPosts.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
+const sortedPortfolio = portfolioPosts.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()).slice(0, 6);
 
 // Get unique categories
 const allCategories = [...new Set(portfolioPosts.flatMap(post => post.data.categories || []))].sort();
@@ -18,7 +18,7 @@ function calculateReadingTime(content: string): number {
 }
 ---
 
-<Layout title="Portfolio - Melvin Vivas">
+<Layout title="Portfolio - Isaac Fernández">
   <!-- Hero Section -->
   <HeroSection 
     title="Portfolio"
@@ -27,84 +27,74 @@ function calculateReadingTime(content: string): number {
     showCTA={false}
   />
 
-  <div class="portfolio-container">
-    <!-- Category Filters -->
-    <div class="filters-container">
-      <div class="filters-wrapper" id="categoryFilters">
-        <button
-          class="filter-btn active"
-          data-category="all"
-        >
-          All
-        </button>
-        {allCategories.map((category) => (
-          <button
-            class="filter-btn"
-            data-category={category}
-          >
-            {category}
+ <section class="py-10 home-background pb-20">
+    <div class="flex flex-col mx-16">
+      <!-- Section Header -->
+      <div class="mb-4">
+        <h2 class="text-3xl lg:text-4xl text-left font-bold text-gray-900 dark:text-white mb-6">
+          Mis proyectos
+        </h2>
+        
+        <!-- Filter Tags -->
+        <div class="flex flex-wrap gap-3 mb-8">
+          <button class="filter-btn active px-6 py-2 rounded-full text-sm font-medium bg-white text-gray-900 border-2 border-gray-300">
+            All
           </button>
-        ))}
+          <button class="filter-btn px-6 py-2 rounded-full text-sm font-medium bg-transparent text-[#E0E0E0] border-2 border-white/30 hover:bg-white/10 transition-colors" data-category="Product Design UX/UI">
+            Product Design UX/UI
+          </button>
+          <button class="filter-btn px-6 py-2 rounded-full text-sm font-medium bg-transparent text-[#E0E0E0] border-2 border-white/30 hover:bg-white/10 transition-colors" data-category="Vibe Coding">
+            Vibe coding
+          </button>
+          <button class="filter-btn px-6 py-2 rounded-full text-sm font-medium bg-transparent text-[#E0E0E0] border-2 border-white/30 hover:bg-white/10 transition-colors" data-category="Consulting">
+            Consulting
+          </button>
+        </div>
       </div>
-    </div>
 
-    <!-- Portfolio Grid -->
-    <div class="portfolio-grid" id="portfolioContainer">
-      {
-        sortedPosts.map((post) => {
-          const readingTime = calculateReadingTime(post.body || '');
-          return (
-            <article 
-              class="portfolio-item" 
-              data-categories={JSON.stringify(post.data.categories || [])}
-            >
-              <a href={`/portfolio/${post.slug}`} class="portfolio-link">
-                {/* Featured Image */}
+      <!-- Projects Grid - 2 columns x 3 rows -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {
+          sortedPortfolio.map((post, index) => {
+            const categories = post.data.categories || [];
+            return (
+            <article class="project-item group" data-categories={JSON.stringify(categories)}>
+              <a href={`/portfolio/${post.slug}`} class="block">
+                {/* Project Image - Rectangular without borders */}
                 {post.data.image && (
-                  <div class="portfolio-image">
+                  <div class="relative overflow-hidden rounded-lg mb-6">
                     <img
                       src={post.data.image.src}
                       alt={post.data.image.alt}
-                      class="image"
-                      loading="lazy"
+                      class="w-full h-64 lg:h-80 object-cover transition-transform duration-500 group-hover:scale-105"
                     />
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300"></div>
                   </div>
                 )}
                 
-                {/* Content */}
-                <div class="portfolio-content">
-                  <h2 class="portfolio-item-title">
-                    {post.data.title}
-                  </h2>
-                  
-                  {/* Metadata */}
-                  <div class="portfolio-metadata">
-                    <time class="metadata-item">
-                      {post.data.publishDate.toLocaleDateString('en-US', { 
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric'
-                      })}
-                    </time>
-                    <span class="metadata-separator">•</span>
-                    <span class="metadata-item">{readingTime} min read</span>
-                    <span class="metadata-separator">•</span>
-                    <span class="metadata-category">{post.data.industry}</span>
+                {/* Project Info */}
+                <div class="space-y-3">
+                  <div class="flex items-center gap-3">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-accent-light dark:group-hover:text-accent-dark transition-colors">
+                      {post.data.title}
+                    </h3>
+                    <img src="images/dot.svg" alt="Dot" class="w-2 h-4 mt-1" />
+                    <span class="text-lg text-gray-500 dark:text-gray-400">
+                      {post.data.publishDate.getFullYear()}
+                    </span>
                   </div>
                   
-                  {/* Description */}
-                  <p class="portfolio-description">
+                  <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
                     {post.data.description}
                   </p>
                 </div>
               </a>
             </article>
-          );
-        })
-      }
+          )})
+        }
+      </div>
     </div>
-
-  </div>
+  </section>
 </Layout>
 
 <style>
@@ -118,62 +108,6 @@ function calculateReadingTime(content: string): number {
     .portfolio-container {
       padding: 2rem 2rem 6rem;
     }
-  }
-
-  /* Filters */
-  .filters-container {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    margin-bottom: 3rem;
-  }
-
-  .filters-container::-webkit-scrollbar {
-    display: none;
-  }
-
-  .filters-wrapper {
-    display: flex;
-    gap: 0.75rem;
-    justify-content: center;
-    min-width: max-content;
-    padding: 0 1rem;
-  }
-
-  @media (max-width: 767px) {
-    .filters-wrapper {
-      justify-content: flex-start;
-    }
-  }
-
-  .filter-btn {
-    padding: 0.75rem 1.5rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    border-radius: 9999px;
-    border: 1px solid #d1d5db;
-    background-color: transparent;
-    color: #E0E0E0;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-
-  .filter-btn:hover {
-    background-color: #f3f4f6;
-    border-color: #9ca3af;
-  }
-
-  .filter-btn.active {
-    background-color: #111827;
-    color: white;
-    border-color: #111827;
-  }
-
-  .filter-btn.active:hover {
-    background-color: #1f2937;
   }
 
   /* Portfolio Grid */
@@ -270,27 +204,6 @@ function calculateReadingTime(content: string): number {
     .portfolio-description {
       color: #d1d5db;
     }
-
-    .filter-btn {
-      color: #f9fafb;
-      border-color: #4b5563;
-    }
-
-    .filter-btn:hover {
-      background-color: #374151;
-      border-color: #6b7280;
-    }
-
-    .filter-btn.active {
-      background-color: #f9fafb;
-      color: #111827;
-      border-color: #f9fafb;
-    }
-
-    .filter-btn.active:hover {
-      background-color: #e5e7eb;
-    }
-
     .blog-title {
       color: #f9fafb;
     }
@@ -356,57 +269,70 @@ function calculateReadingTime(content: string): number {
   :global(.dark) .metadata-category {
     color: #60a5fa;
   }
+
+  /* Project Section Styles */
+  .filter-btn.active { background-color: white !important; color: #1f2937 !important; border-color: white !important; }
+  .filter-btn:not(.active) { background-color: transparent; color: white; border-color: rgba(255, 255, 255, 0.3); }
+  .project-item { transition: transform 0.3s ease; }
+  .project-item:hover { transform: translateY(-5px); }
 </style>
 
 <script>
+  // Filter functionality
   function initializeFilters() {
-    const categoryFilters = document.querySelectorAll('.filter-btn');
-    const portfolioItems = document.querySelectorAll('.portfolio-item');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const projectItems = document.querySelectorAll('.project-item');
 
-    let activeCategory = 'all';
-
-    function filterPortfolio() {
-      portfolioItems.forEach(item => {
-        const itemCategories = JSON.parse(item.getAttribute('data-categories') || '[]');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const category = btn.getAttribute('data-category') || 'all';
         
-        const categoryMatch = activeCategory === 'all' || itemCategories.includes(activeCategory);
-        
-        if (categoryMatch) {
-          item.style.display = '';
-        } else {
-          item.style.display = 'none';
-        }
-      });
-    }
+        // Remove active class from all buttons
+        filterBtns.forEach(b => {
+          b.classList.remove('active');
+        });
 
-    function updateCategoryFilter(selectedCategory) {
-      activeCategory = selectedCategory;
-      
-      categoryFilters.forEach(filter => {
-        if (filter.getAttribute('data-category') === selectedCategory) {
-          filter.classList.add('active');
-        } else {
-          filter.classList.remove('active');
-        }
-      });
-      
-      filterPortfolio();
-    }
+        // Add active class to clicked button
+        btn.classList.add('active');
 
-    // Category filter events
-    categoryFilters.forEach(filter => {
-      filter.addEventListener('click', (e) => {
-        e.preventDefault();
-        const category = filter.getAttribute('data-category');
-        updateCategoryFilter(category);
+        // Filter projects based on category
+        projectItems.forEach(item => {
+          if (category === 'all') {
+            (item as HTMLElement).style.display = 'block';
+          } else {
+            const itemCategories = JSON.parse(item.getAttribute('data-categories') || '[]');
+            if (itemCategories.includes(category)) {
+              (item as HTMLElement).style.display = 'block';
+            } else {
+              (item as HTMLElement).style.display = 'none';
+            }
+          }
+        });
       });
     });
   }
 
-  // Initialize when DOM is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeFilters);
-  } else {
+  // Mobile menu functionality
+  function initializeMobileMenu() {
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    mobileMenuBtn?.addEventListener('click', () => {
+      mobileMenu?.classList.toggle('hidden');
+    });
+  }
+
+  // Initialize all functionality when DOM is ready
+  function initializeAll() {
     initializeFilters();
   }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeAll);
+  } else {
+    initializeAll();
+  }
+
+  // Re-initialize after view transitions
+  document.addEventListener('astro:after-swap', initializeAll);
 </script>
