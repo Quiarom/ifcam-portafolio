@@ -32,7 +32,7 @@ function calculateReadingTime(content: string): number {
       <!-- Section Header -->
       <div class="mb-4">
         <h2 class="text-3xl lg:text-4xl text-left font-bold text-gray-900 dark:text-white mb-6">
-          Mis proyectos
+          My projects
         </h2>
         
         <!-- Filter Tags -->
@@ -75,7 +75,7 @@ function calculateReadingTime(content: string): number {
                 {/* Project Info */}
                 <div class="space-y-3">
                   <div class="flex items-center gap-3">
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-accent-light dark:group-hover:text-accent-dark transition-colors">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-accent-light dark:group-hover:text-gray-300 transition-colors">
                       {post.data.title}
                     </h3>
                     <img src="images/dot.svg" alt="Dot" class="w-2 h-4 mt-1" />
@@ -162,10 +162,6 @@ function calculateReadingTime(content: string): number {
     }
   }
 
-  .portfolio-item:hover .portfolio-item-title {
-    color: #2563eb;
-  }
-
   .portfolio-metadata {
     display: flex;
     align-items: center;
@@ -229,27 +225,6 @@ function calculateReadingTime(content: string): number {
   :global(.dark) .portfolio-description {
     color: #d1d5db;
   }
-
-  :global(.dark) .filter-btn {
-    color: #f9fafb;
-    border-color: #4b5563;
-  }
-
-  :global(.dark) .filter-btn:hover {
-    background-color: #374151;
-    border-color: #6b7280;
-  }
-
-  :global(.dark) .filter-btn.active {
-    background-color: #f9fafb;
-    color: #111827;
-    border-color: #f9fafb;
-  }
-
-  :global(.dark) .filter-btn.active:hover {
-    background-color: #e5e7eb;
-  }
-
   :global(.dark) .blog-title {
     color: #f9fafb;
   }
@@ -272,7 +247,7 @@ function calculateReadingTime(content: string): number {
 
   /* Project Section Styles */
   .filter-btn.active { background-color: white !important; color: #1f2937 !important; border-color: white !important; }
-  .filter-btn:not(.active) { background-color: transparent; color: white; border-color: rgba(255, 255, 255, 0.3); }
+  .filter-btn:not(.active) { background-color: transparent; color: #E0E0E0; border-color: rgba(255, 255, 255, 0.3); }
   .project-item { transition: transform 0.3s ease; }
   .project-item:hover { transform: translateY(-5px); }
 </style>
