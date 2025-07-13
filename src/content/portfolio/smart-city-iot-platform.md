@@ -1,7 +1,7 @@
 ---
 title: "Smart City IoT Management Platform"
 publishDate: 2024-07-10
-description: "A comprehensive IoT platform for smart city management, featuring real-time monitoring, predictive analytics, and automated control systems for urban infrastructure optimization and citizen services enhancement."
+description: "A comprehensive IoT platform for smart city management, featuring real-time monitoring, predictive analytics, and urban infrastructure optimization"
 author: "Melvin Vivas"
 image:
   src: "https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?w=800&auto=format&fit=crop&q=80"
