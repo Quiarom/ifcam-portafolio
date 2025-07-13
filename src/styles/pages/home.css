@@ -36,6 +36,7 @@
   border: 1px solid;
   cursor: pointer;
   transition: all var(--transition-fast);
+  color: #E0E0E0;
 }
 
 .home-filter-btn.active {
@@ -46,7 +47,7 @@
 
 .home-filter-btn:not(.active) {
   background-color: transparent;
-  color: white;
+  color: #E0E0E0;
   border-color: rgba(255, 255, 255, 0.3);
 }
 

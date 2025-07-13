@@ -1,5 +1,6 @@
 ---
 import '../styles/components/hero-section.css';
+import LogosRow from './LogosRow.astro';
 
 interface Props {
   title: string;
@@ -26,6 +27,7 @@ const {
     <img
       src="https://www.asilodigital.com/content/images/size/w1000/2025/07/Overlay--1-.png"
       alt="Technology Background"
+      class=""
     />
     <div class="hero-overlay"></div>
   </div>
@@ -88,26 +90,8 @@ const {
     </div>
 
     <!-- Clients Section (only on home) -->
-    {showProfile && (
-      <div class="hero-clients">
-        <div class="hero-clients-container">
-          <!-- Column 1: "Clients" text -->
-          <div class="hero-clients-label">
-            <p>Clients</p>
-          </div>
-          
-          <div class="hero-clients-carousel">
-            <!-- Gradient Shadows -->
-            <div class="hero-clients-gradient-left"></div>
-            <div class="hero-clients-gradient-right"></div>
-            
-            <!-- Carousel Track -->
-            <div id="logoCarousel" class="hero-clients-track">
-              <!-- Logos will be populated by JavaScript -->
-            </div>
-          </div>
-        </div>
-      </div>
+    {showProfile && ( 
+      <LogosRow />
     )}
   </div>
 </section>
