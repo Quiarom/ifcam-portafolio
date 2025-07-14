@@ -5,9 +5,17 @@
 
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Helvetica';
+  src: url('/fonts/helvetica.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Base Typography */
 :root {
-  --font-primary: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-primary: "Helvetica", Helvetica, Arial, sans-serif;
   --font-display: "Crimson Text", "Times New Roman", serif;
   --font-mono: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
   
@@ -80,17 +88,11 @@ body {
 }
 
 /* View Transitions Styles */
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: 0.2s;
-}
-
 ::view-transition-old(root) {
-  animation-name: fade-out;
+  animation: fade-out var(--transition-fast) ease both;
 }
-
 ::view-transition-new(root) {
-  animation-name: fade-in;
+  animation: fade-in var(--transition-fast) ease both;
 }
 
 @keyframes fade-out {

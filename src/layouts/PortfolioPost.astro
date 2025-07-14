@@ -33,20 +33,6 @@ const readingTime = calculateReadingTime(post.body || '');
       
       <h1 class="portfolio-post-title">{title}</h1>
       <p class="portfolio-post-description">{description}</p>
-      
-      <div class="portfolio-post-meta">
-        <time class="meta-date">
-          {publishDate.toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-          })}
-        </time>
-        <span class="meta-separator">•</span>
-        <span class="meta-reading">{readingTime} min read</span>
-        <span class="meta-separator">•</span>
-        <span class="meta-author">By {author}</span>
-      </div>
     </header>
 
     <!-- Featured Image -->

@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'sans': ['Inter', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
+        'sans': ['Helvetica','Inter', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
         'display': ['Crimson Text', 'Times New Roman', 'serif'],
         'mono': ['Monaco', 'Menlo', 'Ubuntu Mono', 'monospace']
       },

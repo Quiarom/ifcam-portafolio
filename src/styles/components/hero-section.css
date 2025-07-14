@@ -89,12 +89,12 @@
 
 .hero-title {
   color: #FFFFFF;
-  font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   font-size: 46px;
   font-style: normal;
   font-weight: 700;
   line-height: 52px; /* 113.043% */
-  letter-spacing: -1.38px;
+  letter-spacing: 1.38px;
   max-width: 751px;
   margin-bottom: var(--spacing-xl);
   margin-top: var(--spacing-xl);
