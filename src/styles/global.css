@@ -13,10 +13,18 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Ivy Presto Display';
+  src: url('/fonts/ivy-presto-thin.woff') format('woff');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Base Typography */
 :root {
-  --font-primary: "Helvetica", Helvetica, Arial, sans-serif;
-  --font-display: "Crimson Text", "Times New Roman", serif;
+  --font-primary: 'Helvetica', Helvetica, Arial, sans-serif;
+  --font-display: 'Ivy Presto Display', "Crimson Text", "Times New Roman", serif;
   --font-mono: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
   
   /* Colors */
