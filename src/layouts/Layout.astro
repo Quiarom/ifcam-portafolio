@@ -2,7 +2,8 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
-import { ViewTransitions } from 'astro:transitions';
+import { ClientRouter } from 'astro:transitions';
+import "../styles/global.css";
 
 interface Props {
   title: string;
@@ -39,7 +40,7 @@ const { title, description = 'A modern portfolio built with Astro' } = Astro.pro
     <style is:global>
       @import "../styles/global.css";
     </style>
-    <ViewTransitions />
+    <ClientRouter />
   </head>
   <body class=" text-gray-900 dark:text-gray-100 min-h-screen">
     <Header />
@@ -63,7 +64,7 @@ const { title, description = 'A modern portfolio built with Astro' } = Astro.pro
       } else {
         document.documentElement.classList.add('dark');
       }
-      window.localStorage.setItem('theme', theme);
+      window.localStorage.setItem('theme', theme ?? 'dark');
       
       // Re-run theme script after view transitions
       document.addEventListener('astro:after-swap', () => {

@@ -3,6 +3,8 @@
 @import './pages/home.css';
 @import './pages/article.css';
 
+@import "tailwindcss";
+
 /* Base Typography */
 :root {
   --font-primary: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;

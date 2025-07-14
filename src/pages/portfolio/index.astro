@@ -59,7 +59,7 @@ function calculateReadingTime(content: string): number {
             const categories = post.data.categories || [];
             return (
             <article class="project-item group" data-categories={JSON.stringify(categories)}>
-              <a href={`/portfolio/${post.slug}`} class="block">
+              <a href={`/portfolio/${post.id}`} class="block">
                 {/* Project Image - Rectangular without borders */}
                 {post.data.image && (
                   <div class="relative overflow-hidden rounded-lg mb-6">

@@ -6,7 +6,7 @@ export async function GET() {
   const searchData = portfolioPosts.map(post => ({
     title: post.data.title,
     description: post.data.description,
-    slug: post.slug,
+    slug: post.id,
     type: 'portfolio'
   }));
 
