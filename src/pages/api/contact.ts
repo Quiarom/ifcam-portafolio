@@ -1,3 +1,5 @@
+export const prerender = false;
+
 import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
 
@@ -41,7 +43,7 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // Enviar email usando Resend
-    const { data, error } = await resend.emails.send({
+    const { error } = await resend.emails.send({
       from: 'Portfolio Contact <onboarding@resend.dev>',
       to: ['quiaro.dev@gmail.com'],
       subject: `Nuevo contacto: ${subject}`,
