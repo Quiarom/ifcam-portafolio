@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import HeroSection from '../../components/HeroSection.astro';
 import { getCollection } from 'astro:content';
+import Footer from '../../components/Footer.astro'
 
 const portfolioPosts = await getCollection('portfolio');
 const sortedPosts = portfolioPosts.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
@@ -95,6 +96,7 @@ function calculateReadingTime(content: string): number {
       </div>
     </div>
   </section>
+  <Footer />
 </Layout>
 
 <style>

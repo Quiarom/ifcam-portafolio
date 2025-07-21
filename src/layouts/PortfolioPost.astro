@@ -2,6 +2,7 @@
 import '../styles/pages/article.css';
 import Layout from './Layout.astro';
 import type { CollectionEntry } from 'astro:content';
+import Footer from '../components/Footer.astro';
 
 type Props = {
   post: CollectionEntry<'portfolio'>;
@@ -99,12 +100,12 @@ const readingTime = calculateReadingTime(post.body || '');
       </aside>
 
       <!-- Right Content - Article Content -->
-      <main class="portfolio-post-content">
+      <main class="portfolio-post-content prose">
         <slot />
       </main>
     </div>
 
-    <!-- Article Footer -->
+    <!-- 
     <footer class="portfolio-post-footer">
       <div class="footer-divider"></div>
       <div class="footer-content">
@@ -129,8 +130,7 @@ const readingTime = calculateReadingTime(post.body || '');
           </a>
         </div>
       </div>
-
-      <!-- Share Section -->
+      
       <div class="share-section">
         <h3 class="share-title">Share This Project</h3>
         <div class="share-buttons">
@@ -155,5 +155,7 @@ const readingTime = calculateReadingTime(post.body || '');
         </div>
       </div>
     </footer>
+    -->
   </div>
+  <Footer />
 </Layout>

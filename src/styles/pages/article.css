@@ -1,4 +1,91 @@
 /* Portfolio Post Layout Styles */
+
+.prose {
+  color: #1a202c; /* text-gray-900 */
+}
+:global(.dark) .prose {
+  color: #f3f4f6; /* text-gray-100 */
+}
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  font-weight: bold;
+  margin-bottom: 1rem; /* mb-4 */
+}
+.prose h1 {
+  font-size: 1.5rem; /* text-2xl */
+}
+@media (min-width: 640px) {
+  .prose h1 {
+    font-size: 1.875rem; /* sm:text-3xl */
+  }
+}
+.prose h2 {
+  font-size: 1.25rem; /* text-xl */
+}
+@media (min-width: 640px) {
+  .prose h2 {
+    font-size: 1.5rem; /* sm:text-2xl */
+  }
+}
+.prose h3 {
+  font-size: 1.125rem; /* text-lg */
+}
+@media (min-width: 640px) {
+  .prose h3 {
+    font-size: 1.25rem; /* sm:text-xl */
+  }
+}
+.prose p {
+  margin-bottom: 1rem; /* mb-4 */
+}
+.prose ul,
+.prose ol {
+  margin-bottom: 1rem; /* mb-4 */
+  margin-left: 1rem;   /* ml-4 */
+}
+.prose li {
+  margin-bottom: 0.5rem; /* mb-2 */
+}
+.prose code {
+  padding-left: 0.25rem;  /* px-1 */
+  padding-right: 0.25rem;
+  padding-top: 0.125rem;  /* py-0.5 */
+  padding-bottom: 0.125rem;
+  border-radius: 0.25rem; /* rounded */
+  background-color: #f3f4f6; /* bg-gray-100 */
+  font-size: 0.875rem;    /* text-sm */
+}
+:global(.dark) .prose code {
+  background-color: #1f2937; /* dark:bg-gray-800 */
+}
+.prose pre {
+  padding: 1rem;           /* p-4 */
+  border-radius: 0.5rem;   /* rounded-lg */
+  background-color: #f3f4f6; /* bg-gray-100 */
+  overflow-x: auto;
+  margin-bottom: 1rem;     /* mb-4 */
+}
+:global(.dark) .prose pre {
+  background-color: #1f2937; /* dark:bg-gray-800 */
+}
+.prose pre code {
+  background-color: transparent; /* bg-transparent */
+  padding: 0;                    /* p-0 */
+}
+.prose a {
+  color: #60a5fa; /* text-accent-light */
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+:global(.dark) .prose a {
+  color: #93c5fd; /* dark:text-accent-dark */
+}
+.prose a:hover {
+  text-decoration: underline;
+}
+
 .portfolio-post-container {
   font-family: Helvetica, Arial, sans-serif;
   background-color: #1f1f1f;
