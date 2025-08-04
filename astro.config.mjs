@@ -4,6 +4,8 @@ import sitemap from '@astrojs/sitemap';
 
 import tailwindcss from '@tailwindcss/vite';
 
+import node from '@astrojs/node';
+
 export default defineConfig({
   site: 'https://example.com',
   integrations: [mdx(), sitemap()],
@@ -17,5 +19,9 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()]
-  }
+  },
+  output: 'server',
+  adapter: node({
+    mode: 'standalone'
+  })
 });
