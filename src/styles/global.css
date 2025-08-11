@@ -5,6 +5,8 @@
 
 @import "tailwindcss";
 
+@plugin "tailwindcss-motion";
+
 @font-face {
   font-family: 'Helvetica';
   src: url('/fonts/helvetica.woff') format('woff');

@@ -2,6 +2,7 @@
 import '../styles/pages/home.css';
 import Layout from '../layouts/Layout.astro';
 import HeroSection from '../components/HeroSection.astro';
+import Accordion from '../components/Accordion.astro';
 import Footer from '../components/Footer.astro';
 import { getCollection } from 'astro:content';
 
@@ -90,13 +91,13 @@ const sortedPortfolio = portfolioPosts.sort((a, b) => b.data.publishDate.valueOf
         }
       </div>
     </div>
+    <Accordion class="mt-10" />
   </section>
 
   <Footer/>
 </Layout>
 
 <style>
-  /* Project Section Styles */
   .filter-btn.active { background-color: white !important; color: #1f2937 !important; border-color: white !important; }
   .filter-btn:not(.active) { background-color: transparent; color: #E0E0E0; border-color: rgba(255, 255, 255, 0.3); }
   .project-item { transition: transform 0.3s ease; }

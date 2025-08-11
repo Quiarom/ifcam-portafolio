@@ -3,14 +3,14 @@
 ---
 
 <section class="client-logos-section">
-  <div class="logo-container">
-    <h2 class="clients-title">Clients</h2>
-    <img src="/images/Mattelsa.svg" class="Mattelsa"/>
-    <img src="/images/Simplification.svg" class="Simplification"/>
-    <img src="/images/Mimverso.svg" class="Mimverso"/>
-    <img src="/images/ITGlobers.svg" class="ITGlobers"/>
-    <img src="/images/Germinador.svg" class="Germinador"/>
-    <img src="/images/CRT.svg" class="CRT"/>
+  <div class="logo-container motion-preset-slide-down motion-delay-[850ms]">
+    <h2 class="clients-title ">Clients</h2>
+    <img src="/images/Mattelsa.svg" class="Mattelsa motion-preset-slide-left motion-ease-spring-bouncier motion-delay-[1000ms]"/>
+    <img src="/images/Simplification.svg" class="Simplification motion-preset-slide-left motion-ease-spring-bouncier motion-delay-[1100ms]"/>
+    <img src="/images/Mimverso.svg" class="Mimverso motion-preset-slide-left motion-ease-spring-bouncier motion-delay-[1200ms]"/>
+    <img src="/images/ITGlobers.svg" class="ITGlobers motion-preset-slide-left motion-ease-spring-bouncier motion-delay-[1300ms]"/>
+    <img src="/images/Germinador.svg" class="Germinador motion-preset-slide-left motion-ease-spring-bouncier motion-delay-[1400ms]"/>
+    <img src="/images/CRT.svg" class="CRT motion-preset-slide-left motion-ease-spring-bouncier motion-delay-[1500ms]"/>
   </div>
 </section>
 
@@ -48,6 +48,11 @@
 
   .logo-container img {
     color: white;
+    transition: all 0.3s ease;
+  }
+
+  .logo-container img:hover {
+    transform:translateY(-5px);
   }
 
   .clients-title {

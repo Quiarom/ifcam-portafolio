@@ -1,0 +1,89 @@
+---
+interface AccordionItem {
+	title: string;
+	price: string;
+	content?: string;
+}
+
+type Props = {
+	title?: string;
+	items?: AccordionItem[];
+	defaultOpenIndex?: number;
+	class?: string;
+};
+
+const {
+	title = 'Services',
+	items = [
+		{
+			title: 'Diseño web',
+			price: 'desde $800',
+			content:
+				'Sitios rápidos, accesibles y optimizados para SEO. Incluye diseño responsivo y CMS cuando se requiere.',
+		},
+		{
+			title: 'Diseño de app',
+			price: 'desde $600',
+			content:
+				'Prototipos y UI para iOS/Android. Incluye user flows, design system y handoff para desarrollo.',
+		},
+		{
+			title: 'Consultoría',
+			price: 'desde $300',
+			content:
+				'Sesiones 1:1 para revisar producto, rendimiento o accesibilidad. Entrego un plan de acción claro.',
+		},
+	],
+	defaultOpenIndex = -1,
+	class: className = '',
+}: Props = Astro.props;
+---
+
+<section class={`mx-16 ${className}`.trim()} aria-labelledby="accordion-title">
+	<h1 id="accordion-title" class="text-4xl font-bold tracking-wide text-white mb-4 py-5">{title}</h1>
+
+	<div class="border-t border-white-200/80">
+		{items.map((item, i) => (
+			<details open={i === defaultOpenIndex} class="group border-b border-neutral-200/80">
+				<summary class="list-none cursor-pointer select-none">
+					<div class="grid grid-cols-[1fr_auto_auto] items-center gap-4 py-6">
+						<h3 class="text-3xl leading-tight font-normal text-neutral-900">
+							{item.title}
+						</h3>
+						<span class="text-neutral-400 text-lg whitespace-nowrap">{item.price}</span>
+						<span aria-hidden="true" class="justify-self-end">
+											<svg
+												class="chevron w-5 h-5 text-neutral-400 transition-transform duration-500 ease-out"
+								viewBox="0 0 20 20"
+								fill="none"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+							</svg>
+						</span>
+					</div>
+				</summary>
+
+				{item.content && (
+					<div class="pb-8 -mt-2 pr-10 text-neutral-600">
+						<p class="leading-relaxed">{item.content}</p>
+					</div>
+				)}
+			</details>
+		))}
+	</div>
+</section>
+
+<style>
+	details[open] .chevron { 
+		transform: rotate(180deg); 
+		transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+	}
+
+	.chevron {
+		transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+	}
+
+	summary::-webkit-details-marker { display: none; }
+</style>
+

@@ -19,10 +19,11 @@ const {
   ctaText = "¡Hablemos!", 
   ctaHref = "/about" 
 } = Astro.props;
+
+const isHome = Astro.url.pathname === '/';
 ---
 
 <section class="hero-section" transition:name="hero-section">
-  <!-- Background Image with Overlay -->
   <div class="hero-background">
     <img
       src="https://www.asilodigital.com/content/images/size/w1000/2025/07/Overlay--1-.png"
@@ -32,10 +33,7 @@ const {
     <div class="hero-overlay"></div>
   </div>
 
-  <!-- Hero Content -->
-  <div class="hero-content">
-    
-    <!-- Profile Section (only on home) -->
+  <div class={`motion-duration-1500 hero-content ${isHome ? '' : ''}`} >
     {showProfile && (
       <div class="hero-profile">
         <img
@@ -70,7 +68,7 @@ const {
 
     <!-- Main Content -->
     <div class={`hero-main ${!showProfile ? 'no-profile' : ''}`}>
-      <h1 class="hero-title" transition:name="hero-title">
+      <h1 class={`motion-duration-1500 hero-title${isHome ? ' ' : ''}`} transition:name="hero-title">
         {title}
       </h1>
       {subtitle && (

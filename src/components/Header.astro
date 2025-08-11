@@ -20,7 +20,7 @@ import { Image } from 'astro:assets';
       <img 
         src="/saturn.svg" 
         alt="Saturn Icon" 
-        class="header-logo saturn-icon"
+        class="header-logo saturn-icon motion-preset-slide-down motion-delay-[400ms]"
       />
     </a>
     
@@ -29,22 +29,22 @@ import { Image } from 'astro:assets';
       class="header-nav-desktop"
       transition:name="main-nav"
     >
-      <div class="header-nav-links">
+      <div class="header-nav-links motion-preset-rebound-down motion-delay-[450ms]">
         <a 
           href="/portfolio" 
-          class="header-nav-link"
+          class="header-nav-link motion-preset-rebound-down motion-delay-[500ms]"
         >
           Work
         </a>
         <a 
           href="/about" 
-          class="header-nav-link"
+          class="header-nav-link motion-preset-rebound-down motion-delay-[550ms]"
         >
           About
         </a>
         <a 
           href="/about" 
-          class="header-nav-link"
+          class="header-nav-link motion-preset-rebound-down motion-delay-[600ms]"
         >
           Contact
         </a>
