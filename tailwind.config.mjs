@@ -1,4 +1,5 @@
 import tailwindcssMotion from "tailwindcss-motion";
+import tailwindIntersect from "tailwindcss-intersect";
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -19,5 +20,5 @@ export default {
       }
     }
   },
-  plugins: [tailwindcssMotion],
+  plugins: [tailwindcssMotion, tailwindIntersect],
 };
