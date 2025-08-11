@@ -3,6 +3,8 @@
   position: relative;
   min-height: 80vh;
   overflow: hidden;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 .hero-background {

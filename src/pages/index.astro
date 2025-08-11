@@ -24,16 +24,16 @@ const sortedPortfolio = portfolioPosts.sort((a, b) => b.data.publishDate.valueOf
   />
 
   <!-- Projects Section -->
-  <section class="py-10 home-background pb-20">
+  <section class="py-10 home-background pb-20 w-full max-w-full">
     <div class="flex flex-col mx-16">
       <!-- Section Header -->
-      <div class="mb-4">
+      <div class="mb-4 w-full max-w-full">
         <h2 class="text-3xl lg:text-4xl text-left font-bold text-gray-900 dark:text-white mb-6 motion-preset-slide-left motion-delay-[1700ms]">
           My projects
         </h2>
         
         <!-- Filter Tags -->
-        <div class="flex flex-wrap gap-3 mb-8">
+        <div class="flex flex-wrap gap-3 mb-8 w-full max-w-full">
           <button class="filter-btn active px-6 py-2 rounded-full text-sm font-medium bg-white text-gray-900 border-2 border-gray-300 motion-preset-slide-left motion-ease-spring-bouncier motion-delay-[1600ms]">
             All
           </button>
@@ -50,7 +50,7 @@ const sortedPortfolio = portfolioPosts.sort((a, b) => b.data.publishDate.valueOf
       </div>
 
       <!-- Projects Grid - 2 columns x 3 rows -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full max-w-full">
         {
           sortedPortfolio.map((post, index) => {
             const categories = post.data.categories || [];
