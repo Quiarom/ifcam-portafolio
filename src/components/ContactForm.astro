@@ -3,9 +3,9 @@ import '../styles/components/contact-form.css';
 ---
 
 <div class="contact-form-container">
-  <h2 class="contact-form-title">Get In Touch</h2>
+  <h2 id="contactFormTitle" class="contact-form-title">Contact</h2>
   
-  <form id="contactForm" class="contact-form">
+  <form id="contactForm" class="contact-form" novalidate aria-labelledby="contactFormTitle" autocomplete="on">
     <div class="form-row">
       <div class="form-group">
         <label for="name" class="form-label">
@@ -18,12 +18,19 @@ import '../styles/components/contact-form.css';
           required
           class="form-input"
           placeholder="Tu nombre completo"
+          aria-required="true"
+          aria-label="Nombre"
+          autocomplete="name"
+          minlength="2"
+          maxlength="60"
         />
       </div>
       
       <div class="form-group">
+        
         <label for="email" class="form-label">
           Email *
+                  <span id="emailError" class="input-error-message" style="display:none;color:#e53e3e;font-size:0.95em;margin-top:2px;">Por favor ingresa un correo válido.</span>
         </label>
         <input
           type="email"
@@ -32,6 +39,11 @@ import '../styles/components/contact-form.css';
           required
           class="form-input"
           placeholder="tu@email.com"
+          aria-required="true"
+          aria-label="Email"
+          autocomplete="email"
+          inputmode="email"
+          maxlength="100"
         />
       </div>
     </div>
@@ -47,6 +59,11 @@ import '../styles/components/contact-form.css';
         required
         class="form-input"
         placeholder="¿En qué puedo ayudarte?"
+        aria-required="true"
+        aria-label="Asunto"
+        autocomplete="off"
+        minlength="3"
+        maxlength="100"
       />
     </div>
     
@@ -54,6 +71,7 @@ import '../styles/components/contact-form.css';
       <label for="message" class="form-label">
         Mensaje *
       </label>
+          <span id="subjectError" class="input-error-message" style="display:none;color:#e53e3e;font-size:0.95em;margin-top:2px;">Por favor ingresa un asunto.</span>
       <textarea
         id="message"
         name="message"
@@ -61,6 +79,11 @@ import '../styles/components/contact-form.css';
         required
         class="form-textarea"
         placeholder="Cuéntame sobre tu proyecto o consulta..."
+        aria-required="true"
+        aria-label="Mensaje"
+        minlength="10"
+        maxlength="1000"
+        autocomplete="off"
       ></textarea>
     </div>
     
@@ -69,14 +92,16 @@ import '../styles/components/contact-form.css';
         type="submit"
         id="submitBtn"
         class="form-submit"
+        aria-busy="false"
+        aria-live="polite"
       >
+        <span id="messageError" class="input-error-message" style="display:none;color:#e53e3e;font-size:0.95em;margin-top:2px;">Por favor ingresa un mensaje (mínimo 10 caracteres).</span>
         <span id="submitText" class="submit-text">Enviar Mensaje</span>
-        <span id="loadingText" class="loading-text hidden">Enviando...</span>
+        <span id="loadingText" class="loading-text hidden" aria-hidden="true">Enviando...</span>
       </button>
     </div>
   </form>
   
-  <!-- Success Message -->
   <div id="successMessage" class="form-message success hidden">
     <div class="form-message-content">
       <svg class="form-message-icon" fill="currentColor" viewBox="0 0 20 20">
@@ -102,9 +127,9 @@ import '../styles/components/contact-form.css';
 </div>
 
 <script>
-  function initializeContactForm() {
-    const form = document.getElementById('contactForm') as HTMLFormElement;
-    const submitBtn = document.getElementById('submitBtn') as HTMLButtonElement;
+  (() => {
+    const form = document.getElementById('contactForm') as HTMLFormElement | null;
+    const submitBtn = document.getElementById('submitBtn') as HTMLButtonElement | null;
     const submitText = document.getElementById('submitText');
     const loadingText = document.getElementById('loadingText');
     const successMessage = document.getElementById('successMessage');
@@ -113,76 +138,92 @@ import '../styles/components/contact-form.css';
 
     if (!form) return;
 
+    function validateFields() {
+      if (!form) return false;
+      let valid = true;
+      for (const el of Array.from(form.elements)) {
+        if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) {
+          if (!el.checkValidity()) {
+            el.classList.add('input-error');
+            valid = false;
+          } else {
+            el.classList.remove('input-error');
+          }
+        }
+      }
+      return valid;
+    }
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      
-      // Reset messages
       successMessage?.classList.add('hidden');
       errorMessage?.classList.add('hidden');
-      
-      // Show loading state
-      submitBtn.disabled = true;
+
+      if (!validateFields()) {
+        if (errorText) errorText.textContent = 'Por favor, completa todos los campos correctamente.';
+        errorMessage?.classList.remove('hidden');
+        errorMessage?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+
+      if (submitBtn) {
+        submitBtn.setAttribute('aria-busy', 'true');
+        submitBtn.disabled = true;
+      }
       submitText?.classList.add('hidden');
       loadingText?.classList.remove('hidden');
+      loadingText?.setAttribute('aria-hidden', 'false');
 
       try {
         const formData = new FormData(form);
-        
         const response = await fetch('/api/contact', {
           method: 'POST',
           body: formData,
         });
-
         const result = await response.json();
-
         if (result.success) {
-          // Show success message
           successMessage?.classList.remove('hidden');
           form.reset();
-          
-          // Scroll to success message
-          successMessage?.scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'center' 
-          });
+          successMessage?.scrollIntoView({ behavior: 'smooth', block: 'center' });
         } else {
-          // Show error message
-          if (errorText) {
-            errorText.textContent = result.error || 'Error al enviar el mensaje';
-          }
+          if (errorText) errorText.textContent = result.error || 'Error al enviar el mensaje';
           errorMessage?.classList.remove('hidden');
-          
-          // Scroll to error message
-          errorMessage?.scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'center' 
-          });
+          errorMessage?.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       } catch (error) {
-        console.error('Error:', error);
-        if (errorText) {
-          errorText.textContent = 'Error de conexión. Por favor intenta de nuevo.';
-        }
+        if (errorText) errorText.textContent = 'Error de conexión. Por favor intenta de nuevo.';
         errorMessage?.classList.remove('hidden');
-        
-        // Scroll to error message
-        errorMessage?.scrollIntoView({ 
-          behavior: 'smooth', 
-          block: 'center' 
-        });
+        errorMessage?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       } finally {
-        // Reset button state
-        submitBtn.disabled = false;
+        if (submitBtn) {
+          submitBtn.setAttribute('aria-busy', 'false');
+          submitBtn.disabled = false;
+        }
         submitText?.classList.remove('hidden');
         loadingText?.classList.add('hidden');
+        loadingText?.setAttribute('aria-hidden', 'true');
       }
     });
-  }
 
-  // Initialize when DOM is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeContactForm);
-  } else {
-    initializeContactForm();
-  }
+    if (form) {
+      const emailInput = form.querySelector('#email');
+      const emailError = document.getElementById('emailError');
+      for (const el of Array.from(form.elements)) {
+        if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) {
+          el.addEventListener('input', () => {
+            if (el.checkValidity()) {
+              el.classList.remove('input-error');
+              if (el === emailInput && emailError) {
+                emailError.style.display = 'none';
+              }
+            } else {
+              if (el === emailInput && emailError) {
+                emailError.style.display = 'block';
+              }
+            }
+          });
+        }
+      }
+    }
+  })();
 </script>
