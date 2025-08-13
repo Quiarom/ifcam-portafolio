@@ -6,9 +6,11 @@ import tailwindcss from '@tailwindcss/vite';
 
 import node from '@astrojs/node';
 
+import react from '@astrojs/react';
+
 export default defineConfig({
   site: 'https://example.com',
-  integrations: [mdx(), sitemap()],
+  integrations: [mdx(), sitemap(), react()],
 
   markdown: {
     shikiConfig: {
