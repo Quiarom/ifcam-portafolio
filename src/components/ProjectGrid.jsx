@@ -23,11 +23,12 @@ export default function ProjectGrid({ projects }) {
         {FILTERS.map((f, i) => (
           <button
             key={f.value}
-            className={`filter-btn motion-preset-slide-left motion-ease-spring-bouncier motion-delay-[${filterButtonDelays[i]}ms] px-6 py-2 rounded-full text-sm font-medium border-2 transition-colors ${
+            className={`filter-btn motion-preset-slide-left motion-ease-spring-bouncier px-6 py-2 rounded-full text-sm font-medium border-2 transition-colors ${
               filter === f.value
                 ? "bg-white text-gray-900 border-white"
                 : "bg-transparent text-[#BABABA] border-white/30 hover:bg-white/10"
             }`}
+            style={{ animationDelay: `${filterButtonDelays[i]}ms` }}
             onClick={() => {setFilter(f.value);}}
             aria-pressed={filter === f.value}
             type="button"
