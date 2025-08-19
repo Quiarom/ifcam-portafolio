@@ -51,10 +51,9 @@ export default function ProjectGrid({ projects }) {
               animationDelay: `${(index % 2) * 120 + Math.floor(index / 2) * 180}ms`,
               animationFillMode: "forwards",
             }}
-            tabIndex={0}
             aria-label={post.data.title}
           >
-            <a href={`/portfolio/${post.id}`} className="block">
+            <a href={`/portfolio/${post.id}`} className="block" tabIndex={0}>
               {post.data.image && (
                 <div className="relative overflow-hidden rounded-lg mb-6">
                   <img
