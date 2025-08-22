@@ -27,7 +27,7 @@ const FAQ = () => {
   };
 
   return (
-    <div className="px-16 w-full text-white my-6">
+    <div className="px-16 w-full text-white my-6" id="services">
       <h1
         id="accordion-title"
         className="text-4xl font-bold tracking-wide text-white mb-4 py-5"

@@ -2,9 +2,10 @@ import { useState } from "react";
 
 const Accordion = ({ title, answer, price, isOpen, onClick }) => {
   return (
-    <div className="py-2 border-b border-neutral-200/80">
+    <div className="py-2 border-b border-neutral-200/80"
+    onClick={onClick}
+    >
       <button
-        onClick={onClick}
         className="flex justify-between w-full py-4"
       >
         <span className="lg:text-3xl md:text-2xl sm:text-2xl leading-tight font-normal">{title}</span>

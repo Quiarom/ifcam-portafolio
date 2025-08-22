@@ -40,10 +40,10 @@ const sortedPortfolio = portfolioPosts.sort((a, b) => b.data.publishDate.valueOf
       </div>
       <ProjectGrid projects={sortedPortfolio} client:load/>
     </div>
-    <FAQ client:load/>
-    <About />
   </section>
 
+  <FAQ client:load/>
+  <About />
   <Footer/>
 </Layout>
 
