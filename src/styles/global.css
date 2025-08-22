@@ -91,13 +91,6 @@ body {
   outline-offset: 2px;
 }
 
-/* Smooth transitions for theme changes */
-* {
-  transition: background-color var(--transition-fast), 
-              color var(--transition-fast), 
-              border-color var(--transition-fast);
-}
-
 /* View Transitions Styles */
 ::view-transition-old(root) {
   animation: fade-out var(--transition-fast) ease both;

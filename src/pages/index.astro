@@ -9,6 +9,9 @@ import About from '../components/About.astro';
 import { getCollection } from 'astro:content';
 import ProjectGrid from '../components/ProjectGrid.jsx';
 
+import ServiceContainer from '../components/Accordion/ServiceContainer';
+import FAQ from '../components/Accordion/ServiceContainer';
+
 import {Image} from 'astro:assets';
 import dot from '../assets/dot.png';
 
@@ -37,7 +40,7 @@ const sortedPortfolio = portfolioPosts.sort((a, b) => b.data.publishDate.valueOf
       </div>
       <ProjectGrid projects={sortedPortfolio} client:load/>
     </div>
-    <Accordion class="mt-10" />
+    <FAQ client:load/>
     <About />
   </section>
 
