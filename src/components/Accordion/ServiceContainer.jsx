@@ -11,17 +11,17 @@ const FAQ = () => {
       </h1>
       <Accordion
         title="Diseño Web"
-        answer="I like to use iOS products"
+        answer="Lorem Ipsum dolor sit amet, consectetur adipiscing elit."
         price="800"
       />
       <Accordion
         title="Diseño de App"
-        answer="I like to use Tailwind"
+        answer="Lorem Ipsum dolor sit amet, consectetur adipiscing elit."
         price="600"
       />
       <Accordion
         title="Consultoría"
-        answer="I am using Supabase!"
+        answer="Lorem Ipsum dolor sit amet, consectetur adipiscing elit."
         price="300"
       />
     </div>
