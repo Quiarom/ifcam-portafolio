@@ -38,7 +38,7 @@ export default function ProjectGrid({ projects }) {
         ))}
       </div>
       {/* Grilla de proyectos */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full max-w-full">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full max-w-full pb-4">
         {filtered.map((post, index) => (
           <article
             key={post.id}

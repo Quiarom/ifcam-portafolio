@@ -1,16 +1,13 @@
 import { useState } from "react";
 
-const Accordion = ({ title, answer, price }) => {
-  const [accordionOpen, setAccordionOpen] = useState(false);
-
+const Accordion = ({ title, answer, price, isOpen, onClick }) => {
   return (
     <div className="py-2 border-b border-neutral-200/80">
       <button
-        onClick={() => setAccordionOpen(!accordionOpen)}
+        onClick={onClick}
         className="flex justify-between w-full py-4"
       >
         <span className="lg:text-3xl md:text-2xl sm:text-2xl leading-tight font-normal">{title}</span>
-        {/* {accordionOpen ? <span>-</span> : <span>+</span>} */}
         <div className="flex flex-row items-center justify-center gap-0 ">
             <span className="lg:text-lg text-base whitespace-nowrap">desde ${price}</span>
             <svg
@@ -25,7 +22,7 @@ const Accordion = ({ title, answer, price }) => {
             height="2"
             rx="1"
             className={`transform origin-center transition duration-200 ease-out ${
-              accordionOpen && "!rotate-180"
+              isOpen && "!rotate-180"
             }`}
           />
           <rect
@@ -34,7 +31,7 @@ const Accordion = ({ title, answer, price }) => {
             height="2"
             rx="1"
             className={`transform origin-center rotate-90 transition duration-200 ease-out ${
-              accordionOpen && "!rotate-180"
+              isOpen && "!rotate-180"
             }`}
           />
         </svg>
@@ -42,8 +39,8 @@ const Accordion = ({ title, answer, price }) => {
       </button>
       <div
         className={`grid overflow-hidden transition-all duration-300 ease-in-out text-white text-sm ${
-          accordionOpen
-            ? "grid-rows-[1fr] opacity-100"
+          isOpen
+            ? "grid-rows-[1fr] opacity-100 pb-2"
             : "grid-rows-[0fr] opacity-0"
         }`}
       >
